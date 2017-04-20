@@ -5,7 +5,7 @@
 #include "../../D2/D2Helpers.h"
 #include "ScreenRefresh.h"
 
-Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0xC3A11, (int)PanelPosition_Interception, 12);
+Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0xC39F6, (int)PanelPosition_Interception, 39);
 
 void Resolution::OnLoad() {
 	isInGame = false;
@@ -97,31 +97,8 @@ void Resolution::OnGameExit() {
 	}
 }
 
-void __declspec(naked) PanelPosition_Interception(void) {
-	__asm
-	{
-		; Check that the mode is set to HD, otherwise run 640 mode code
-			cmp eax, 03
-
-			pushad
-			mov eax, p_D2CLIENT_TabXOffset
-			jne PositionMenuTab_Mode640
-
-			; HD positions
-			; Position X offset
-			mov dword ptr ds : [eax], 352
-			; Position Y offset
-			mov dword ptr ds : [eax + 4], -110
-
-			jmp PositionMenuTab_RepositionEnd
-
-		PositionMenuTab_Mode640 :
-		mov dword ptr ds : [eax], 0
-			mov dword ptr ds : [eax + 4], 0
-
-		PositionMenuTab_RepositionEnd :
-									  popad
-									  ret
-	}
+void PanelPosition_Interception(void) {
+	*p_D2CLIENT_PanelXOffset = (*p_D2CLIENT_ScreenSizeX / 2) - 320;
+	*p_D2CLIENT_PanelYOffset = ((int)*p_D2CLIENT_ScreenSizeY - 480) / -2;
 }
 
