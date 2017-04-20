@@ -37,7 +37,6 @@ Patch* patches[] = {
 	new Patch(Jump, D2MULTI, 0x108A0, (int)ChannelChat_Interception, 6),
 	new Patch(Jump, D2MULTI, 0x107A0, (int)ChannelEmote_Interception, 6),
 	new Patch(NOP, D2CLIENT, 0x3CB7C, 0, 9),
-	new Patch(Call, D2CLIENT, 0xC3A11, (int)PositionMenuTab_Interception, 12),
 
 	// Nice looking UI patches
 	// new Patch(Jump, D2CLIENT, 0x29267, (int)DisplayExpansionUI_Interception, 5),

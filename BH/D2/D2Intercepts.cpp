@@ -225,34 +225,6 @@ SkipChat:
 	}
 }
 
-void __declspec(naked) PositionMenuTab_Interception(void) {
-	__asm
-	{
-		; Check that the mode is set to HD, otherwise run 640 mode code
-		cmp eax, 03
-
-		pushad
-		mov eax, p_D2CLIENT_TabXOffset
-		jne PositionMenuTab_Mode640
-
-		; HD positions
-		; Position X offset
-		mov dword ptr ds:[eax], 352
-		; Position Y offset
-		mov dword ptr ds:[eax+4], -110
-
-		jmp PositionMenuTab_RepositionEnd
-
-PositionMenuTab_Mode640:
-		mov dword ptr ds:[eax], 0
-		mov dword ptr ds:[eax+4], 0
-
-PositionMenuTab_RepositionEnd:
-		popad
-		ret
-	}
-}
-
 void DisplayExpansionUI_Interception(void) {
 	__asm
 	{

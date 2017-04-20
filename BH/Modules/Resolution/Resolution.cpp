@@ -5,7 +5,7 @@
 #include "../../D2/D2Helpers.h"
 #include "ScreenRefresh.h"
 
-using namespace std;
+Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0xC3A11, (int)PanelPosition_Interception, 12);
 
 void Resolution::OnLoad() {
 	isInGame = false;
@@ -13,6 +13,7 @@ void Resolution::OnLoad() {
 	newWidth = BH::config->ReadInt("New Width", 1344);
 	newHeight = BH::config->ReadInt("New Height", 700);
 	Toggles["Toggle Resolution"] = BH::config->ReadToggle("Toggle Resolution", "VK_6", false);
+	panelPositionPatch->Install();
 }
 
 void Resolution::LoadConfig() {
@@ -20,6 +21,7 @@ void Resolution::LoadConfig() {
 }
 
 void Resolution::OnUnload() {
+	panelPositionPatch->Remove();
 }
 
 int Resolution::GetMode(int height) {
@@ -94,3 +96,32 @@ void Resolution::OnGameExit() {
 		__raise BH::moduleManager->OnResolutionChanged(800, 600);
 	}
 }
+
+void __declspec(naked) PanelPosition_Interception(void) {
+	__asm
+	{
+		; Check that the mode is set to HD, otherwise run 640 mode code
+			cmp eax, 03
+
+			pushad
+			mov eax, p_D2CLIENT_TabXOffset
+			jne PositionMenuTab_Mode640
+
+			; HD positions
+			; Position X offset
+			mov dword ptr ds : [eax], 352
+			; Position Y offset
+			mov dword ptr ds : [eax + 4], -110
+
+			jmp PositionMenuTab_RepositionEnd
+
+		PositionMenuTab_Mode640 :
+		mov dword ptr ds : [eax], 0
+			mov dword ptr ds : [eax + 4], 0
+
+		PositionMenuTab_RepositionEnd :
+									  popad
+									  ret
+	}
+}
+
