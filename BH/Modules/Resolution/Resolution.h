@@ -21,3 +21,5 @@ public:
 	void OnGameJoin(const string& name, const string& pass, int diff);
 	void OnGameExit();
 };
+
+void PanelPosition_Interception();

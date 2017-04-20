@@ -37,7 +37,6 @@ Patch* patches[] = {
 	new Patch(Jump, D2MULTI, 0x14850, (int)ChannelEmote_Interception, 6),
 	new Patch(NOP, D2CLIENT, 0x27711, 0, 4),
 	//new Patch(NOP, D2CLIENT, 0x27713, 0, 2), //Also works need research
-	new Patch(Call, D2CLIENT, 0x1D411, (int)PositionMenuTab_Interception, 12),
 };
 
 Patch* BH::oogDraw = new Patch(Call, D2WIN, 0xEC61, (int)OOGDraw_Interception, 5);

@@ -5,7 +5,7 @@
 #include "../../D2/D2Helpers.h"
 #include "ScreenRefresh.h"
 
-using namespace std;
+Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0x1D3F6, (int)PanelPosition_Interception, 39);
 
 void Resolution::OnLoad() {
 	isInGame = false;
@@ -13,6 +13,7 @@ void Resolution::OnLoad() {
 	newWidth = BH::config->ReadInt("New Width", 1344);
 	newHeight = BH::config->ReadInt("New Height", 700);
 	Toggles["Toggle Resolution"] = BH::config->ReadToggle("Toggle Resolution", "VK_6", false);
+	panelPositionPatch->Install();
 }
 
 void Resolution::LoadConfig() {
@@ -20,6 +21,7 @@ void Resolution::LoadConfig() {
 }
 
 void Resolution::OnUnload() {
+	panelPositionPatch->Remove();
 }
 
 int Resolution::GetMode(int height) {
@@ -94,3 +96,9 @@ void Resolution::OnGameExit() {
 		__raise BH::moduleManager->OnResolutionChanged(800, 600);
 	}
 }
+
+void PanelPosition_Interception(void) {
+	*p_D2CLIENT_PanelXOffset = (*p_D2CLIENT_ScreenSizeX / 2) - 320;
+	*p_D2CLIENT_PanelYOffset = ((int)*p_D2CLIENT_ScreenSizeY - 480) / -2;
+}
+

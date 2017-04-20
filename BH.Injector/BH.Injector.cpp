@@ -149,7 +149,7 @@ int main(int argc, const char* argv[]) {
 		autoinject_thread.join();
 		break;
 	default://Specific window
-		int nWindow = nOpt - 2;
+		int nWindow = nOpt - 3;
 		if (nWindow < 0 || nWindow >= (int)Windows.size())
 			std::cout << "You have chosen an invalid option." << std::endl;
 		else
