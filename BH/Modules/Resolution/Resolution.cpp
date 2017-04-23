@@ -121,23 +121,23 @@ void RedrawUILeftPanelBorders_Interception() {
 	int basePositionY = (*p_D2CLIENT_ScreenSizeY / 2) - 300;
 
 	// Frame 0
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 253, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 253, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 1
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 63, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 63, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 2
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 484, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 484, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 3
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 4
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 553, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 553, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 }
 
@@ -150,23 +150,23 @@ void RedrawUIRightPanelBorders_Interception() {
 	int basePositionY = (*p_D2CLIENT_ScreenSizeY / 2) - 300;
 
 	// Frame 5
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 63, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 63, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 6
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 253, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 253, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 7
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 313, basePositionY + 484, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 313, basePositionY + 484, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 8
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 553, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 553, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 
 	// Frame 9
-	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 255, 5, 0);
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 0xFFFFFFFF, 5, 0);
 	frameNumber++;
 }
 
