@@ -6,6 +6,7 @@
 #include "ScreenRefresh.h"
 
 Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0xC39F6, (int)PanelPosition_Interception, 39);
+Patch* enablePanelBordersPatch = new Patch(Call, D2CLIENT, 0x29262, (int)Resolution::EnableUIPanelBorders_Interception, 5);
 
 void Resolution::OnLoad() {
 	isInGame = false;
@@ -13,7 +14,9 @@ void Resolution::OnLoad() {
 	newWidth = BH::config->ReadInt("New Width", 1344);
 	newHeight = BH::config->ReadInt("New Height", 700);
 	Toggles["Toggle Resolution"] = BH::config->ReadToggle("Toggle Resolution", "VK_6", false);
+
 	panelPositionPatch->Install();
+	enablePanelBordersPatch->Install();
 }
 
 void Resolution::LoadConfig() {
@@ -22,6 +25,7 @@ void Resolution::LoadConfig() {
 
 void Resolution::OnUnload() {
 	panelPositionPatch->Remove();
+	enablePanelBordersPatch->Remove();
 }
 
 int Resolution::GetMode(int height) {
@@ -100,5 +104,12 @@ void Resolution::OnGameExit() {
 void PanelPosition_Interception(void) {
 	*p_D2CLIENT_PanelXOffset = (*p_D2CLIENT_ScreenSizeX / 2) - 320;
 	*p_D2CLIENT_PanelYOffset = ((int)*p_D2CLIENT_ScreenSizeY - 480) / -2;
+}
+
+// This enables the expansion extension borders when you open
+// menus (char menu, skill menu...)
+int __fastcall Resolution::EnableUIPanelBorders_Interception(void) {
+	int compareBypass = (*p_D2CLIENT_ScreenSizeX >= 800) ? 2 : 0;
+	return compareBypass;
 }
 

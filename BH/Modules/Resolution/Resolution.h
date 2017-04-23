@@ -20,6 +20,8 @@ public:
 	void OnKey(bool up, BYTE key, LPARAM lParam, bool* block);
 	void OnGameJoin(const string& name, const string& pass, int diff);
 	void OnGameExit();
+
+	static int __fastcall EnableUIPanelBorders_Interception();
 };
 
 void PanelPosition_Interception();
