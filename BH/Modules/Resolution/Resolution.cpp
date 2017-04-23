@@ -7,6 +7,8 @@
 
 Patch* panelPositionPatch = new Patch(Call, D2CLIENT, 0xC39F6, (int)PanelPosition_Interception, 39);
 Patch* enablePanelBordersPatch = new Patch(Call, D2CLIENT, 0x29262, (int)Resolution::EnableUIPanelBorders_Interception, 5);
+Patch* redrawLeftPanelBorderPatch = new Patch(Call, D2CLIENT, 0x271ED, (int)RedrawUILeftPanelBorders_Interception, 154);
+Patch* redrawRightPanelBorderPatch = new Patch(Call, D2CLIENT, 0x270F2, (int)RedrawUIRightPanelBorders_Interception, 187);
 
 void Resolution::OnLoad() {
 	isInGame = false;
@@ -17,6 +19,8 @@ void Resolution::OnLoad() {
 
 	panelPositionPatch->Install();
 	enablePanelBordersPatch->Install();
+	redrawLeftPanelBorderPatch->Install();
+	redrawRightPanelBorderPatch->Install();
 }
 
 void Resolution::LoadConfig() {
@@ -26,6 +30,8 @@ void Resolution::LoadConfig() {
 void Resolution::OnUnload() {
 	panelPositionPatch->Remove();
 	enablePanelBordersPatch->Remove();
+	redrawLeftPanelBorderPatch->Remove();
+	redrawRightPanelBorderPatch->Remove();
 }
 
 int Resolution::GetMode(int height) {
@@ -101,14 +107,72 @@ void Resolution::OnGameExit() {
 	}
 }
 
-void PanelPosition_Interception(void) {
+void PanelPosition_Interception() {
 	*p_D2CLIENT_PanelXOffset = (*p_D2CLIENT_ScreenSizeX / 2) - 320;
 	*p_D2CLIENT_PanelYOffset = ((int)*p_D2CLIENT_ScreenSizeY - 480) / -2;
 }
 
-// This enables the expansion extension borders when you open
-// menus (char menu, skill menu...)
-int __fastcall Resolution::EnableUIPanelBorders_Interception(void) {
+void RedrawUILeftPanelBorders_Interception() {
+	__asm {
+		mov dword ptr ds : [ebp + 0x30], eax
+	}
+	int frameNumber = 0;
+	int basePositionX = (*p_D2CLIENT_ScreenSizeX / 2) - 400;
+	int basePositionY = (*p_D2CLIENT_ScreenSizeY / 2) - 300;
+
+	// Frame 0
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 253, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 1
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 63, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 2
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 484, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 3
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 4
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 256, basePositionY + 553, 255, 5, 0);
+	frameNumber++;
+}
+
+void RedrawUIRightPanelBorders_Interception() {
+	__asm {
+		mov dword ptr ds : [ebp + 0x30], edx
+	}
+	int frameNumber = 5;
+	int basePositionX = (*p_D2CLIENT_ScreenSizeX / 2);
+	int basePositionY = (*p_D2CLIENT_ScreenSizeY / 2) - 300;
+
+	// Frame 5
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 63, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 6
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 253, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 7
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 313, basePositionY + 484, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 8
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX + 144, basePositionY + 553, 255, 5, 0);
+	frameNumber++;
+
+	// Frame 9
+	D2GFX_DrawUIPanelBorder(&frameNumber, basePositionX, basePositionY + 553, 255, 5, 0);
+	frameNumber++;
+}
+
+// This enables the expansion panel borders when you open
+// panels (char menu, skill menu...)
+int __fastcall Resolution::EnableUIPanelBorders_Interception() {
 	int compareBypass = (*p_D2CLIENT_ScreenSizeX >= 800) ? 2 : 0;
 	return compareBypass;
 }
