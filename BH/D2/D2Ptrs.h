@@ -464,6 +464,7 @@ FUNCPTR(D2MCPCLIENT, ParseGameListPacket, VOID __fastcall, (BYTE* pPacket), 0x6E
 // HDD2 Related
 FUNCPTR(D2CLIENT, ResizeDiablo, int __stdcall, (), 0x3B5B0) 
 FUNCPTR(D2WIN, SetResolutionMode, int __stdcall, (int), 0x17C00)
+FUNCPTR(D2GFX, DrawUIPanelBorder, void __stdcall, (int* pFrameNumber, int xOffset, int yOffset, BYTE lightLevel, BYTE unknown, BYTE unknown2), 0xB080)
 
 #undef FUNCPTR
 #undef ASMPTR
