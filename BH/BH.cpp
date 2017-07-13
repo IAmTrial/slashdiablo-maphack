@@ -86,7 +86,6 @@ bool BH::Startup(HINSTANCE instance, VOID* reserved) {
 	new Pathing();
 	new Party();
 	new ItemMover();
-	new Resolution();
 
 	moduleManager->LoadModules();
 	

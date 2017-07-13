@@ -118,20 +118,6 @@ ASMPTR(D2CLIENT, OverrideShrinePatch_ORIG, 0x1155B8)//Updated 1.13c
 VARPTR(D2CLIENT, ScreenSizeX, DWORD, 0xDBC48)
 VARPTR(D2CLIENT, ScreenSizeY, DWORD, 0xDBC4C)
 
-//HDD2 Resolution and Map movement
-VARPTR(D2CLIENT, CropMode, DWORD, 0x11C414)
-VARPTR(D2CLIENT, MapPosX, DWORD, 0xF9E14)
-VARPTR(D2CLIENT, MapPosY, DWORD, 0xF9E18)
-VARPTR(D2CLIENT, SizeX1, DWORD, 0x11C230)
-VARPTR(D2CLIENT, SizeY1, DWORD, 0x11C234)
-VARPTR(D2CLIENT, SizeX2, DWORD, 0xDBC50)
-
-// HDD2 Tab Movement
-VARPTR(D2CLIENT, PanelXOffset, DWORD, 0x11B9A0)
-VARPTR(D2CLIENT, PanelYOffset, DWORD, 0x11B9A4)
-
-VARPTR(D2CLIENT, InventoryArrangeMode, DWORD, 0x11B99C)
-
 VARPTR(D2CLIENT, CursorHoverX, DWORD, 0xE0EB8)
 VARPTR(D2CLIENT, CursorHoverY, DWORD, 0xE0EBC)
 
@@ -460,11 +446,6 @@ VARPTR(D2WIN, ChatInputBox, DWORD*, 0x12A0D0)
 FUNCPTR(D2GAME, Rand, DWORD __fastcall, (DWORD* seed), 0x1160)
 
 FUNCPTR(D2MCPCLIENT, ParseGameListPacket, VOID __fastcall, (BYTE* pPacket), 0x6E30)
-
-// HDD2 Related
-FUNCPTR(D2CLIENT, ResizeDiablo, int __stdcall, (), 0x3B5B0) 
-FUNCPTR(D2WIN, SetResolutionMode, int __stdcall, (int), 0x17C00)
-FUNCPTR(D2GFX, DrawUIPanelBorder, void __stdcall, (int* pFrameNumber, int xOffset, int yOffset, DWORD color, DWORD unknown, DWORD unknown2), 0xB080)
 
 #undef FUNCPTR
 #undef ASMPTR

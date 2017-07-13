@@ -15,8 +15,6 @@ void Module::Load() {
 		return;
 
 	// Hook up all the events
-	
-	__hook(&ModuleManager::OnResolutionChanged, BH::moduleManager, &Module::OnResolutionChanged, this);
 
 	__hook(&ModuleManager::OnDraw, BH::moduleManager, &Module::OnDraw, this);
 	__hook(&ModuleManager::OnAutomapDraw, BH::moduleManager, &Module::OnAutomapDraw, this);
@@ -47,8 +45,6 @@ void Module::Unload() {
 		return;
 
 	// Unhook all events
-	__unhook(&ModuleManager::OnResolutionChanged, BH::moduleManager, &Module::OnResolutionChanged, this);
-
 	__unhook(&ModuleManager::OnDraw, BH::moduleManager, &Module::OnDraw, this);
 	__unhook(&ModuleManager::OnAutomapDraw, BH::moduleManager, &Module::OnAutomapDraw, this);
 	__unhook(&ModuleManager::OnOOGDraw, BH::moduleManager, &Module::OnOOGDraw, this);
