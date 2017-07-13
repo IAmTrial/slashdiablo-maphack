@@ -12,6 +12,7 @@ Patch* nextGame2 = new Patch(Call, D2MULTI, 0x14A0B, (int)Bnet::NextGamePatch, 5
 Patch* nextPass1 = new Patch(Call, D2MULTI, 0x14D64, (int)Bnet::NextPassPatch, 5);
 Patch* nextPass2 = new Patch(Call, D2MULTI, 0x14A46, (int)Bnet::NextPassPatch, 5);
 Patch* ftjPatch = new Patch(Call, D2CLIENT, 0x4363E, (int)FailToJoin_Interception, 6);
+Patch* removePass = new Patch(Call, D2MULTI, 0x1250, (int)RemovePass_Interception, 5);
 
 void Bnet::OnLoad() {
 	LoadConfig();
@@ -31,6 +32,7 @@ void Bnet::LoadConfig() {
 	if (showLastPass) {
 		nextPass1->Install();
 		nextPass2->Install();
+		removePass->Install();
 	}
 
 	if (failToJoin > 0 && !D2CLIENT_GetPlayerUnit())
@@ -43,6 +45,7 @@ void Bnet::OnUnload() {
 
 	nextPass1->Remove();
 	nextPass2->Remove();
+	removePass->Remove();
 
 	ftjPatch->Remove();
 }
@@ -105,6 +108,7 @@ void Bnet::OnGameExit() {
 	if (showLastPass) {
 		nextPass1->Install();
 		nextPass2->Install();
+		removePass->Install();
 	}
 }
 
@@ -131,6 +135,31 @@ VOID __fastcall Bnet::NextPassPatch(Control* box, BOOL(__stdcall *FunCallBack)(C
 	
 	// original code
 	D2WIN_SetEditBoxProc(box, FunCallBack);
+	delete[] wszLastPass;
+}
+
+void __declspec(naked) RemovePass_Interception() {
+	__asm {
+		PUSHAD
+		CALL [Bnet::RemovePassPatch]
+		POPAD
+
+		; Original code
+		XOR EAX, EAX
+		SUB ECX, 01
+		RET
+	}
+}
+
+void Bnet::RemovePassPatch() {
+	Control* box = *p_D2MULTI_PassBox;
+
+	if (Bnet::lastPass.size() == 0 || box == nullptr) {
+		return;
+	}
+
+	wchar_t *wszLastPass = AnsiToUnicode("");
+	D2WIN_SetControlText(box, wszLastPass);
 	delete[] wszLastPass;
 }
 

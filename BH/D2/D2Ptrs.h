@@ -364,6 +364,7 @@ FUNCPTR(D2MULTI, PrintChannelText, void __stdcall, (char *szText, DWORD dwColor)
 VARPTR(D2MULTI, ChatBoxMsg, char*, 0x38F18)
 VARPTR(D2MULTI, GameListControl, Control*, 0x39CC0)//1.13c - Unchanged
 VARPTR(D2MULTI, EditboxPreferences, ControlPreferences*, 0x19C60)
+VARPTR(D2MULTI, PassBox, Control*, 0x39CD8)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // D2Multi Stubs
