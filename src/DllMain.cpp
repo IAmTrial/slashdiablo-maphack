@@ -26,14 +26,25 @@ BOOL WINAPI DllMain(HMODULE instance, DWORD reason, VOID* reserved) {
     static BH *slashDiabloHack = nullptr;
 
     switch(reason) {
-    case DLL_PROCESS_ATTACH:
-        slashDiabloHack = new BH(instance);
+    case DLL_PROCESS_ATTACH: {
+        if (slashDiabloHack == nullptr) {
+            slashDiabloHack = new BH(instance);
+            slashDiabloHack->initialize();
+        }
+        break;
+    }
 
-    case DLL_PROCESS_DETACH:
-        delete slashDiabloHack;
+    case DLL_PROCESS_DETACH: {
+        if (slashDiabloHack != nullptr) {
+            delete slashDiabloHack;
+            slashDiabloHack = nullptr;
+        }
+        break;
+    }
 
-    default:
+    default: {
         return FALSE;
+    }
     }
 
     return TRUE;
