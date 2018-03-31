@@ -1,0 +1,10 @@
+*.exe
+*.dll
+*.so
+*.a
+*.def
+*.o
+*.res
+
+*.cbp
+*.layout
