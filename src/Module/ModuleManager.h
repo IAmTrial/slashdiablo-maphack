@@ -31,8 +31,18 @@
 
 class ModuleManager {
 public:
+    ModuleManager();
+    ModuleManager(ModuleManager&& moduleManager) = default;
+    ~ModuleManager();
+
+    // Module Management
     void add(std::shared_ptr<Module> pModule);
     void remove(std::wstring_view moduleName);
+
+    void loadModules();
+    void unloadModules();
+    void reloadConfig();
+    void onMpqLoaded();
 
     void onLoop();
 

@@ -31,13 +31,16 @@
 class Module {
 public:
     // Module Events
+    virtual void onLoad() {};
+    virtual void onUnload() {};
+
     virtual void loadConfig() {};
     virtual void onMpqLoaded() {};
 
-    virtual void OnLoop() {};
+    virtual void onLoop() {};
 
     // Game Events
-    virtual void onGameJoin(const std::string& name, const std::string& pass,
+    virtual void onGameJoin(std::string_view name, std::string_view pass,
             int diff) {}
     virtual void onGameExit() {}
 
@@ -47,15 +50,12 @@ public:
     virtual void onOOGDraw() {}
 
     virtual void onLeftClick(bool up, int x, int y, bool* block) {}
-    virtual void onRihtClick(bool up, int x, int y, bool* block) {}
+    virtual void onRightClick(bool up, int x, int y, bool* block) {}
     virtual void onKey(bool up, BYTE key, LPARAM lParam, bool* block) {}
 
     virtual void onChatPacketRecv(BYTE* packet, bool* block) {}
     virtual void onRealmPacketRecv(BYTE* packet, bool* block) {}
     virtual void onGamePacketRecv(BYTE* packet, bool* block) {}
-
-    virtual void onUserInput(const wchar_t* msg, bool fromGame, bool* block) {}
-    virtual void onChatMsg(const char* user, const char* msg, bool fromGame, bool* block) {}
 
     std::wstring getName() const;
     bool isActive() const;

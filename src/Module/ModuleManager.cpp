@@ -22,10 +22,112 @@
 #include "ModuleManager.h"
 #include <memory>
 
+ModuleManager::ModuleManager() {
+}
+
+ModuleManager::~ModuleManager() {
+}
+
 void ModuleManager::add(std::shared_ptr<Module> pModule) {
     this->modules.insert({ pModule->getName(), pModule });
 }
 
 void ModuleManager::remove(std::wstring_view moduleName) {
     this->modules.erase(moduleName.data());
+}
+
+void ModuleManager::loadModules() {
+    for (const auto& module : this->modules) {
+        module.second->onLoad();
+    }
+}
+
+void ModuleManager::unloadModules() {
+    for (const auto& module : this->modules) {
+        module.second->onUnload();
+    }
+}
+
+void ModuleManager::reloadConfig() {
+    for (const auto& module : this->modules) {
+        module.second->loadConfig();
+    }
+}
+
+void ModuleManager::onMpqLoaded() {
+    for (const auto& module : this->modules) {
+        module.second->onUnload();
+    }
+}
+
+void ModuleManager::onLoop() {
+    for (const auto& module : this->modules) {
+        module.second->onLoop();
+    }
+}
+
+void ModuleManager::onGameJoin(std::string_view name, std::string_view pass, int diff) {
+    for (const auto& module : this->modules) {
+        module.second->onGameJoin(name, pass, diff);
+    }
+}
+
+void ModuleManager::onGameExit() {
+    for (const auto& module : this->modules) {
+        module.second->onGameExit();
+    }
+}
+
+void ModuleManager::onDraw() {
+    for (const auto& module : this->modules) {
+        module.second->onDraw();
+    }
+}
+
+void ModuleManager::onAutomapDraw() {
+    for (const auto& module : this->modules) {
+        module.second->onAutomapDraw();
+    }
+}
+
+void ModuleManager::onOOGDraw() {
+    for (const auto& module : this->modules) {
+        module.second->onOOGDraw();
+    }
+}
+
+void ModuleManager::onLeftClick(bool up, int x, int y, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onLeftClick(up, x, y, block);
+    }
+}
+
+void ModuleManager::onRightClick(bool up, int x, int y, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onRightClick(up, x, y, block);
+    }
+}
+
+void ModuleManager::onKey(bool up, BYTE key, LPARAM lParam, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onKey(up, key, lParam, block);
+    }
+}
+
+void ModuleManager::onChatPacketRecv(BYTE* packet, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onChatPacketRecv(packet, block);
+    }
+}
+
+void ModuleManager::onRealmPacketRecv(BYTE* packet, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onRealmPacketRecv(packet, block);
+    }
+}
+
+void ModuleManager::onGamePacketRecv(BYTE* packet, bool* block) {
+    for (const auto& module : this->modules) {
+        module.second->onGamePacketRecv(packet, block);
+    }
 }
