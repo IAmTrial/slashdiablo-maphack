@@ -27,7 +27,7 @@ BOOL WINAPI DllMain(HMODULE instance, DWORD reason, VOID* reserved) {
 
     switch(reason) {
     case DLL_PROCESS_ATTACH:
-        slashDiabloHack = new BH(instance, reserved);
+        slashDiabloHack = new BH(instance);
 
     case DLL_PROCESS_DETACH:
         delete slashDiabloHack;

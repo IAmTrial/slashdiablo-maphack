@@ -25,12 +25,16 @@
 #define BH_H
 
 #include <windows.h>
+#include <string>
 
 class BH {
 public:
-    BH(HMODULE instance, VOID* reserved);
+    BH(HMODULE instance);
     ~BH();
+
 private:
+    HMODULE instance;
+    std::wstring directoryPath;
 };
 
 #endif // BH_H

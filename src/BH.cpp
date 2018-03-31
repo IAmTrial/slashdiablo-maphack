@@ -21,8 +21,27 @@
 
 #include "BH.h"
 #include <windows.h>
+#include <shlwapi.h>
 
-BH::BH(HMODULE instance, VOID* reserved) {
+BH::BH(HMODULE instance) : instance(instance) {
+    // Locate the full path to the DLL.
+    wchar_t path[MAX_PATH];
+
+    if (!GetModuleFileNameW(this->instance, path, MAX_PATH)) {
+        MessageBoxW(nullptr, L"GetModuleFileName failed.",
+            L"SlashDiablo Maphack Error", MB_OK | MB_ICONERROR);
+        std::exit(0);
+    }
+
+    // Remove the DLL file name from the path to get the directory.
+    if (!PathRemoveFileSpecW(path)) {
+        MessageBoxW(nullptr, L"PathCchRemoveFileSpec failed.",
+            L"SlashDiablo Maphack Error", MB_OK | MB_ICONERROR);
+        std::exit(0);
+    }
+
+    this->directoryPath.assign(path);
+    this->directoryPath += L"\\";
 }
 
 BH::~BH() {
