@@ -30,7 +30,10 @@
 class BH {
 public:
     BH(HMODULE instance);
+    BH(BH&& bh) = default;
     ~BH();
+
+    void initialize();
 
 private:
     HMODULE instance;

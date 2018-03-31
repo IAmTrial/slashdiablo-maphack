@@ -46,3 +46,6 @@ BH::BH(HMODULE instance) : instance(instance) {
 
 BH::~BH() {
 }
+
+void BH::initialize() {
+}
