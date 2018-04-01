@@ -152,57 +152,57 @@ const std::vector<KeyCode>& Common::getKeyCodes() {
 const KeyCode& Common::getValueMappedKeyCode(unsigned int keyValue) {
     // Store every KeyCode in a map, to get constant lookup time.
     static std::unordered_map<unsigned int, KeyCode>
-        valueMappedKeyCodes;
+        mappedKeyCodes;
 
     // If map is empty, generate the values for the map.
-    if (valueMappedKeyCodes.size() == 0) {
+    if (mappedKeyCodes.size() == 0) {
         for (const auto& keyCode : getKeyCodes()) {
-            valueMappedKeyCodes.insert(std::make_pair(keyCode.value, keyCode));
+            mappedKeyCodes.insert(std::make_pair(keyCode.value, keyCode));
         }
     }
 
-    const auto valueMappedKeyCode = valueMappedKeyCodes.find(keyValue);
-    return (valueMappedKeyCode != valueMappedKeyCodes.cend())
-        ? valueMappedKeyCode->second
-        : valueMappedKeyCodes.at(0);
+    const auto mappedKeyCode = mappedKeyCodes.find(keyValue);
+    return (mappedKeyCode != mappedKeyCodes.cend())
+        ? mappedKeyCode->second
+        : mappedKeyCodes.at(0);
 }
 
 const KeyCode& Common::getLiteralMappedKeyCode(
         std::string_view literalName) {
     // Store every KeyCode in a map, to get constant lookup time.
     static std::unordered_map<std::string_view, KeyCode>
-        valueMappedKeyCodes;
+        mappedKeyCodes;
 
     // If map is empty, generate the values for the map.
-    if (valueMappedKeyCodes.size() == 0) {
+    if (mappedKeyCodes.size() == 0) {
         for (const auto& keyCode : getKeyCodes()) {
-            valueMappedKeyCodes.insert(
+            mappedKeyCodes.insert(
                 std::make_pair(keyCode.literalName, keyCode));
         }
     }
 
-    const auto valueMappedKeyCode = valueMappedKeyCodes.find(literalName);
-    return (valueMappedKeyCode != valueMappedKeyCodes.cend())
-        ? valueMappedKeyCode->second
-        : valueMappedKeyCodes.at(0);
+    const auto mappedKeyCode = mappedKeyCodes.find(literalName);
+    return (mappedKeyCode != mappedKeyCodes.cend())
+        ? mappedKeyCode->second
+        : mappedKeyCodes.at("Not Set");
 }
 
 const KeyCode& Common::getVirtualMappedKeyCode(
         std::string_view virtualName) {
     // Store every KeyCode in a map, to get constant lookup time.
     static std::unordered_map<std::string_view, KeyCode>
-        valueMappedKeyCodes;
+        mappedKeyCodes;
 
     // If map is empty, generate the values for the map.
-    if (valueMappedKeyCodes.size() == 0) {
+    if (mappedKeyCodes.size() == 0) {
         for (const auto& keyCode : getKeyCodes()) {
-            valueMappedKeyCodes.insert(
+            mappedKeyCodes.insert(
                 std::make_pair(keyCode.virtualName, keyCode));
         }
     }
 
-    const auto valueMappedKeyCode = valueMappedKeyCodes.find(virtualName);
-    return (valueMappedKeyCode != valueMappedKeyCodes.cend())
-        ? valueMappedKeyCode->second
-        : valueMappedKeyCodes.at(0);
+    const auto mappedKeyCode = mappedKeyCodes.find(virtualName);
+    return (mappedKeyCode != mappedKeyCodes.cend())
+        ? mappedKeyCode->second
+        : mappedKeyCodes.at(0);
 }
