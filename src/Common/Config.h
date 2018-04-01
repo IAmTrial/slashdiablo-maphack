@@ -24,9 +24,16 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <map>
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <vector>
+
+struct Toggle {
+    const unsigned int toggleKeyCodeValue;
+    const bool defaultState;
+};
 
 class Config {
 public:
@@ -36,9 +43,19 @@ public:
     bool parse();
 
     // Functions to read values from the configuration
-    bool readBool(std::string_view key, bool defaultValue);
-    int readInt(std::string_view key, int value);
-    unsigned int readKey(std::string_view key, std::string_view toggle);
+    bool readBool(std::string_view key, bool defaultValue) const;
+    std::string readString(std::string_view key,
+            std::string_view defaultValue) const;
+    int readInt(std::string_view key, int defaultValue) const;
+    unsigned int readKeyValue(std::string_view key,
+            std::string_view defaultVirtualName) const;
+    Toggle readToggle(std::string_view key,
+            std::string_view defaultKeyCodeVirtualName,
+            bool defaultState) const;
+    std::map<int, std::string> readArray(std::string_view key) const;
+    std::map<std::string, std::string> readAssoc(std::string_view key) const;
+    std::vector<std::pair<std::string, std::string>> readMapList(
+            std::string_view key) const;
 
     std::string getDirectoryAbsolutePath() const;
     std::string getFileName() const;
@@ -48,7 +65,8 @@ private:
     std::string directoryAbsolutePath;
     std::string fileName;
     std::string fileAbsolutePath;
-    std::unordered_map<std::string, std::string> contents;
+    std::unordered_map<std::string,
+        std::vector<std::pair<std::string, std::string>>> contents;
 };
 
 #endif // CONFIG_H
