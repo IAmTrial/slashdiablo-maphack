@@ -26,6 +26,13 @@
 
 #include <string>
 #include <string_view>
+#include <vector>
+
+struct KeyCode {
+    const std::string_view virtualName;
+    const unsigned int value;
+    const std::string_view literalName;
+};
 
 namespace Common {
     std::string unicodeToAnsi(std::wstring_view str);
@@ -36,6 +43,11 @@ namespace Common {
 
     bool stobool(std::string_view str);
     bool stobool(std::wstring_view str);
+
+    const std::vector<KeyCode>& getKeyCodes();
+    const KeyCode& getValueMappedKeyCode(unsigned int keyValue);
+    const KeyCode& getLiteralMappedKeyCode(std::string_view literalName);
+    const KeyCode& getVirtualMappedKeyCode(std::string_view virtualName);
 }
 
 #endif // COMMON_H
