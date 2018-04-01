@@ -29,7 +29,7 @@ ModuleManager::~ModuleManager() {
 }
 
 void ModuleManager::add(std::shared_ptr<Module> pModule) {
-    this->modules.insert({ pModule->getName(), pModule });
+    this->modules.insert(std::make_pair(pModule->getName(), pModule));
 }
 
 void ModuleManager::remove(std::wstring_view moduleName) {
