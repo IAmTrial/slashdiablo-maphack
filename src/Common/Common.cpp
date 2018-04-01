@@ -41,7 +41,7 @@ std::string Common::unicodeToAnsi(std::wstring_view str) {
         return "";
     }
 
-    return std::string(buffer);
+    return buffer;
 }
 
 std::wstring Common::ansiUnicode(std::string_view str) {
@@ -55,7 +55,7 @@ std::wstring Common::ansiUnicode(std::string_view str) {
         return L"";
     }
 
-    return std::wstring(buffer);
+    return buffer;
 }
 
 std::string Common::strtrim(std::string_view source) {
@@ -204,5 +204,5 @@ const KeyCode& Common::getVirtualMappedKeyCode(
     const auto mappedKeyCode = mappedKeyCodes.find(virtualName);
     return (mappedKeyCode != mappedKeyCodes.cend())
         ? mappedKeyCode->second
-        : mappedKeyCodes.at(0);
+        : mappedKeyCodes.at("Unknown");
 }
